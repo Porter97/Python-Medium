@@ -6,10 +6,10 @@ Medium API Python Client
 The source code is currently hosted on GitHub at:
 https://github.com/Porter97/Python-Medium
 
-Binary installers for the latest released version are available at the [Python
+Installers for the latest released version are available at the [Python
 package index](https://pypi.org/project/Python-Medium)
 
 ```sh
-# or PyPI
+# PyPI
 pip install pandas
 ```
