@@ -11,5 +11,5 @@ package index](https://pypi.org/project/Python-Medium)
 
 ```sh
 # PyPI
-pip install Python-Medium
+pip install python-medium
 ```
