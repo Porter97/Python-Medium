@@ -6,7 +6,7 @@ This repository contains the open source SDK for integrating
 For full API documentation, see our [developer docs](https://github.com/Medium/medium-api-docs).
 
 **Warning:** This is an unofficial project to integrate with Mediums API. This project is intended to maintain
-work on this library after updates have ceased on a previous version. The author makes no claim to any of the
+work on the library after updates have ceased on a previous version. The author makes no claim to any of the
 intellectual property herein, or any of the the trademarks owned or protected by Medium. 
 
 ## Where to get it
