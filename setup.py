@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='Medium',
-    version='v1.0.0',
+    name='python-medium',
+    version='v1.0.1',
     packages=find_packages(),
     url='',
     license='',

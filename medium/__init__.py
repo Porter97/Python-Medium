@@ -21,6 +21,7 @@ class Client(object):
 
     def get_authorization_url(self, state, redirect_url, scopes):
         """Get a URL for users to authorize the application.
+
         :param str state: A string that will be passed back to the redirect_url
         :param str redirect_url: The URL to redirect after authorization
         :param list scopes: The scopes to grant the application
@@ -37,7 +38,7 @@ class Client(object):
         return "https://medium.com/m/oauth/authorize?" + urlencode(qs)
 
     def exchange_authorization_code(self, code, redirect_url):
-        """Excahnge the authorization code for a long-lived access token, and set
+        """Exchange the authorization code for a long-lived access token, and set
         the token on the current Client.
 
         :param str code: The code supplied to the redirect URL after a user
@@ -50,7 +51,7 @@ class Client(object):
                 'access_token': '...',
                 'expires_at': 1449441560773,
                 'refresh_token': '...',
-                'scope': ['basicProfile', 'publishPost']
+                'scope': ['basicProfile', 'listPublications', 'publishPost', 'uploadImage']
             }
         """
         data = {
@@ -59,6 +60,29 @@ class Client(object):
             "client_secret": self.application_secret,
             "grant_type": "authorization_code",
             "redirect_uri": redirect_url,
+        }
+        return self._request_and_set_auth_code(data)
+
+    def exchange_refresh_token(self, refresh_token):
+        """Exchange the supplied refreshh token for a new access token, and
+        set the token on the current Client.
+
+        :param str refresh_token: The refresh token, as provided by
+            ``exchange_authorization_code()``
+        :returns: A dictionary with the new authorizations ::
+            {
+                'token_type': 'Bearer',
+                'access_token': '...',
+                'expires_at': 1449441560773,
+                'refresh_token': '...',
+                'scope': ['basicProfile', 'publishPost']
+            }
+        """
+        data = {
+            "refresh_token": refresh_token,
+            "client_id": self.application_id,
+            "client_secret": self.application_secret,
+            "grant_type": "refresh_token",
         }
         return self._request_and_set_auth_code(data)
 
@@ -77,8 +101,55 @@ class Client(object):
         """
         return self._request("GET", "/v1/me")
 
+    def list_publications(self, user_id):
+        """List the user's publications
+        
+        Requires the ``listPublications`` scope.
+        
+        :param str user_id: The application-specific user ID as returned by
+            ``get_current_user()``
+            
+        :returns: A list with the user's publications
+        
+            [
+                {
+                  "id": "b45573563f5a",
+                  "name": "Developers",
+                  "description": "Medium’s Developer resources",
+                  "url": "https://medium.com/developers",
+                  "imageUrl": "https://cdn-images-1.medium.com/fit/c/200/200/1*ccokMT4VXmDDO1EoQQHkzg@2x.png"
+                }
+            ]
+
+        """
+
+        return self._request("GET", "/v1/users/{}/publications".format(user_id))
+
+    def list_publications_contributors(self, publication_id):
+
+        """List contributors for a publication
+
+        Requires the ``listPublications`` scope.
+
+        :param str publication_id: The id of the publication
+
+        :returns: A list with the contributor data
+
+            [
+                {
+                  "publicationId": "b45573563f5a",
+                  "userId": "13a06af8f81849c64dafbce822cbafbfab7ed7cecf82135bca946807ea351290d",
+                  "role": "editor"
+                }
+            ]
+
+        """
+
+        return self._request("GET", "/v1/publications/{}/contributors".format(publication_id))
+
     def create_post(self, user_id, title, content, content_format, tags=None,
-                    canonical_url=None, publish_status=None, license=None):
+                    canonical_url=None, publish_status=None, license=None,
+                    publication_id=None, notify_followers=False):
         """Create a post for the current user
 
         Requires the 'publishPost' scope.
@@ -105,6 +176,10 @@ class Client(object):
             - ``cc-40-by-nc-sa``
             - ``cc-40-zero``
             - ``public-domain``
+        :param str publication_id: (optional), The id of the publication the post
+            is being created under.
+        :param bool notify_followers: (optional), Whether to notify followers that
+            the user has published.
         :returns: A dictionary with the post data ::
             {
                 'canonicalUrl': '',
@@ -115,6 +190,7 @@ class Client(object):
                 'authorId': '1f86...',
                 'publishStatus': 'draft',
                 'id': '55050649c95'
+                'publicationId': '123456789' (only if created under a publication)
             }
         """
         data = {
@@ -123,16 +199,22 @@ class Client(object):
             "contentFormat": content_format,
         }
 
-        if tags is not None:
+        if tags:
             data["tags"] = tags
-        if canonical_url is not None:
+        if canonical_url:
             data["canonicalUrl"] = canonical_url
-        if publish_status is not None:
+        if publish_status:
             data["publishStatus"] = publish_status
-        if license is not None:
+        if license:
             data["license"] = license
+        if notify_followers:
+            data["notifyFollowers"] = notify_followers
 
-        path = "/v1/users/%s/posts" % user_id
+        if publication_id:
+            path = "/v1/publications/%s/posts" % publication_id
+        else:
+            path = "/v1/users/%s/posts" % user_id
+
         return self._request("POST", path, json=data)
 
     def upload_image(self, file_path, content_type):
