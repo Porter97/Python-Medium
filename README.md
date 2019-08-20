@@ -9,7 +9,6 @@ For full API documentation, see our [developer docs](https://github.com/Medium/m
 work on this library after updates have ceased on a previous version. The author makes no claim to any of the
 intellectual property herein, or any of the the trademarks owned or protected by Medium. 
 
-
 ## Where to get it
 The source code is currently hosted on GitHub at:
 https://github.com/Porter97/Python-Medium
@@ -76,26 +75,12 @@ print("My new post!", post["url"])
 
 ## Running tests
 
-To run tests against this package, first install the test requirements and make
-sure that the `medium` package is exportable. (We recommend using virtualenv.)
-
-```bash
-$ pip install -r tests/requirements.txt
-$ pip install -e .
-```
-
-Then run the primary test file:
-
-```bash
-$ python tests/test.py
-```
+The testing module is currently under development, if you would like to contribute please
+file a PR and I would be happy to merge it.
 
 ## Contributing
 
-Questions, comments, bug reports, and pull requests are all welcomed. If you
-haven't contributed to a Medium project before please head over to the [Open
-Source Project](https://github.com/Medium/opensource#note-to-external-contributors)
-and fill out an OCLA (it should be pretty painless).
+Questions, comments, bug reports, and pull requests are all welcomed.
 
 ## Authors
 

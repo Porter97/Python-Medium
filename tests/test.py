@@ -12,7 +12,7 @@ import responses
 from medium import Client
 
 class TestClient(unittest.TestCase):
-
+    # TODO: FINISH TESTING CLIENT
     def setUp(self):
         self.client = Client(access_token="myaccesstoken")
 
