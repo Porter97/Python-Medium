@@ -1,6 +1,9 @@
-# Medium
-Medium API Python Client
+# Medium SDK for Python
 
+This repository contains the open source SDK for integrating
+[Medium](https://medium.com/)'s OAuth2 REST API with your Python app.
+
+For full API documentation, see our [developer docs](https://github.com/Medium/medium-api-docs).
 
 **Warning:** This is an unofficial project to integrate with Mediums API. This project is intended to maintain
 work on this library after updates have ceased on a previous version. The author makes no claim to any of the
@@ -18,13 +21,6 @@ package index](https://pypi.org/project/Python-Medium)
 # PyPI
 pip install python-medium
 ```
-
-# Medium SDK for Python
-
-This repository contains the open source SDK for integrating
-[Medium](https://medium.com/)'s OAuth2 REST API with your Python app.
-
-For full API documentation, see our [developer docs](https://github.com/Medium/medium-api-docs).
 
 ## Installing dependencies
 
