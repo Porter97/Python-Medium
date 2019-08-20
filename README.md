@@ -2,6 +2,11 @@
 Medium API Python Client
 
 
+**Warning:** This is an unofficial project to integrate with Mediums API. This project is intended to maintain
+work on this library after updates have ceased on a previous version. The author makes no claim to any of the
+intellectual property herein, or any of the the trademarks owned or protected by Medium. 
+
+
 ## Where to get it
 The source code is currently hosted on GitHub at:
 https://github.com/Porter97/Python-Medium
@@ -13,10 +18,6 @@ package index](https://pypi.org/project/Python-Medium)
 # PyPI
 pip install python-medium
 ```
-
-**Warning:** This is an unofficial project to integrate with Mediums API. This project is intended to maintain
-work on this library after updates have ceased on a previous version. The author makes no claim to any of the
-intellectual property herein, or any of the the trademarks owned or protected by Medium. 
 
 # Medium SDK for Python
 
