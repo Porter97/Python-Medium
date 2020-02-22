@@ -63,6 +63,9 @@ post = client.create_post(user_id=user["id"], title="Title", content="<h2>Title<
 # List user publications
 publications = client.list_publications(user_id=user["id"])
 
+# Retrieve RSS feed of current user posts
+feed = client.list_articles(user['username'])
+
 # List publication contributors
 pub_contributors = client.list_publications_contributors(publication_id=publications[0]["id"])
 

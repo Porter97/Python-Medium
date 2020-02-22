@@ -125,6 +125,15 @@ class Client(object):
 
         return self._request("GET", "/v1/users/{}/publications".format(user_id))
 
+    def list_articles(self, username):
+        """
+        Returns a list of a users article feed in XML format.
+        :param str username: The application-specific username as returned by current_user
+        :return:
+        """
+
+        return self._request("GET", "/feed/@{}".format(username), alt_path=True)['items']
+
     def list_publications_contributors(self, publication_id):
 
         """List contributors for a publication
@@ -243,9 +252,12 @@ class Client(object):
         self.access_token = result["access_token"]
         return result
 
-    def _request(self, method, path, json=None, form_data=None, files=None):
+    def _request(self, method, path, alt_path=False, json=None, form_data=None, files=None):
         """Make a signed request to the given route."""
-        url = BASE_PATH + path
+        if alt_path:
+            url = "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com" + path
+        else:
+            url = BASE_PATH + path
         headers = {
             "Accept": "application/json",
             "Accept-Charset": "utf-8",
@@ -276,3 +288,4 @@ class MediumError(Exception):
         self.code = error.get("code", -1)
         self.msg = error.get("message", message)
         super(MediumError, self).__init__(self.msg)
+

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='python-medium',
-    version='v1.0.2',
+    version='v1.1',
     packages=find_packages(),
     url='https://github.com/Porter97/Python-Medium',
     license='http://www.apache.org/licenses/LICENSE-2.0',
